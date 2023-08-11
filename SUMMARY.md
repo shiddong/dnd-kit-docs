@@ -4,8 +4,8 @@
 
 ## Introduction
 
-- [Installation](introduction/installation.md)
-- [Quick start](introduction/getting-started.md)
+- [介绍](introduction/installation.md)
+- [快速开始](introduction/getting-started.md)
 
 ## API Documentation
 
