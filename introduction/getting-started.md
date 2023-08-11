@@ -40,7 +40,7 @@ function App() {
 
 ![](../.gitbook/assets/droppable-large.svg)
 
-接下来，我们开始创建第一个 **Droppable** 组件。为此，我们会使用 `useDroppable` hook.
+接下来，我们开始创建第一个 **Droppable** 组件。为此，需要使用到 `useDroppable` hook.
 
 useDroppable 对应用程序的结构没有要求。但至少需要传递一个 [ref](https://reactjs.org/docs/refs-and-the-dom.html) 给将要变成 **droppable** 的 DOM 元素，同时还需要为所有的 **droppable** 组件提供一个唯一的 id。
 
@@ -76,7 +76,7 @@ function Droppable(props) {
 
 ![](../.gitbook/assets/draggable-large.svg)
 
-下面，让我们看看如何实现第一个 **Draggable** 组件，为此，我们会使用 `useDraggable` hook.
+下面，我们看看如何实现第一个 **Draggable** 组件，为此，需要使用到 `useDraggable` hook.
 
 同样，`useDraggable` hook 对应用程序的结构也没有要求。它只需要将监听器和一个 ref 附加在你希望成为 **draggable** 的 DOM 元素上。同时，你也需要为所有的 **draggable** 组件提供一个唯一的 id。
 
@@ -326,4 +326,4 @@ export function Draggable(props) {
 {% endtab %}
 {% endtabs %}
 
-我们希望这份快速入门指南能让你了解 `@dnd-kit` 的简单和强大。还有很多东西需要学习，我们鼓励你通过阅读对应的 API 文档，了解所有传递给 `<DndContext>`、`useDroppable` 和 `useDraggable` 的属性。
+希望这份快速入门指南能让你了解 `@dnd-kit` 的简单和强大。还有很多东西需要学习，希望你通过阅读对应的 API 文档，了解所有传递给 `<DndContext>`、`useDroppable` 和 `useDraggable` 的属性。
