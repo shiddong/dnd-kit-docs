@@ -4,7 +4,7 @@ description: >-
   yourself with the core concepts of dnd kit.
 ---
 
-# Quick start
+# 快速开始
 
 {% hint style="info" %}
 Before getting started, make sure you have followed the installation steps outlined in the [Installation guide](installation.md).
@@ -16,12 +16,13 @@ First, we'll set up the general structure of the app. In order for the [`useDrag
 
 {% tabs %}
 {% tab title="App.jsx" %}
-```jsx
-import React from 'react';
-import {DndContext} from '@dnd-kit/core';
 
-import {Draggable} from './Draggable';
-import {Droppable} from './Droppable';
+```jsx
+import React from "react";
+import { DndContext } from "@dnd-kit/core";
+
+import { Draggable } from "./Draggable";
+import { Droppable } from "./Droppable";
 
 function App() {
   return (
@@ -29,9 +30,10 @@ function App() {
       <Draggable />
       <Droppable />
     </DndContext>
-  )
+  );
 }
 ```
+
 {% endtab %}
 {% endtabs %}
 
@@ -39,7 +41,7 @@ function App() {
 
 ![](../.gitbook/assets/droppable-large.svg)
 
-Next, let's set up your first **Droppable** component.  To do so, we'll be using the `useDroppable` hook.\
+Next, let's set up your first **Droppable** component. To do so, we'll be using the `useDroppable` hook.\
 \
 The `useDroppable` hook isn't opinionated about how your app should be structured. At minimum though, it requires you pass a [ref](https://reactjs.org/docs/refs-and-the-dom.html) to the DOM element that you would like to become droppable. You'll also need to provide a unique `id` attribute to all your droppable components.&#x20;
 
@@ -47,19 +49,19 @@ When a **draggable** element is moved over your droppable element, the `isOver` 
 
 {% tabs %}
 {% tab title="Droppable.jsx" %}
+
 ```jsx
-import React from 'react';
-import {useDroppable} from '@dnd-kit/core';
+import React from "react";
+import { useDroppable } from "@dnd-kit/core";
 
 function Droppable(props) {
-  const {isOver, setNodeRef} = useDroppable({
-    id: 'droppable',
+  const { isOver, setNodeRef } = useDroppable({
+    id: "droppable",
   });
   const style = {
-    color: isOver ? 'green' : undefined,
+    color: isOver ? "green" : undefined,
   };
-  
-  
+
   return (
     <div ref={setNodeRef} style={style}>
       {props.children}
@@ -67,6 +69,7 @@ function Droppable(props) {
   );
 }
 ```
+
 {% endtab %}
 {% endtabs %}
 
@@ -76,7 +79,7 @@ function Droppable(props) {
 
 Next, let's take a look at implementing our first **Draggable** component. To do so, we'll be using the `useDraggable` hook.
 
-The `useDraggable` **** hook isn't opinionated about how your app should be structured. It does however require you to be able to attach listeners and a ref to the DOM element that you would like to become draggable. You'll also need to provide a unique `id` attribute to all your draggable components.&#x20;
+The `useDraggable` \*\*\*\* hook isn't opinionated about how your app should be structured. It does however require you to be able to attach listeners and a ref to the DOM element that you would like to become draggable. You'll also need to provide a unique `id` attribute to all your draggable components.&#x20;
 
 After a draggable item is picked up, the `transform` property will be populated with the `translate` coordinates you'll need to move the item on the screen. &#x20;
 
@@ -84,19 +87,21 @@ The `transform` object adheres to the following shape: `{x: number, y: number, s
 
 {% tabs %}
 {% tab title="Draggable.jsx" %}
+
 ```jsx
-import React from 'react';
-import {useDraggable} from '@dnd-kit/core';
+import React from "react";
+import { useDraggable } from "@dnd-kit/core";
 
 function Draggable(props) {
-  const {attributes, listeners, setNodeRef, transform} = useDraggable({
-    id: 'draggable',
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    id: "draggable",
   });
-  const style = transform ? {
-    transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-  } : undefined;
+  const style = transform
+    ? {
+        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
+      }
+    : undefined;
 
-  
   return (
     <button ref={setNodeRef} style={style} {...listeners} {...attributes}>
       {props.children}
@@ -104,6 +109,7 @@ function Draggable(props) {
   );
 }
 ```
+
 {% endtab %}
 {% endtabs %}
 
@@ -112,20 +118,20 @@ As you can see from the example above, it really only takes just a few lines to 
 {% hint style="success" %}
 **Tips:**&#x20;
 
-* For performance reasons, we recommend you use **`transform`** over other positional CSS properties to move the dragged element.&#x20;
-* You'll likely want to alter the **`z-index`** of your Draggable component to ensure it appears on top of other elements.
-* If your item needs to move from one container to another, we recommend you use the [`<DragOverlay>`](../api-documentation/draggable/drag-overlay.md) component.
-{% endhint %}
+- For performance reasons, we recommend you use **`transform`** over other positional CSS properties to move the dragged element.&#x20;
+- You'll likely want to alter the **`z-index`** of your Draggable component to ensure it appears on top of other elements.
+- If your item needs to move from one container to another, we recommend you use the [`<DragOverlay>`](../api-documentation/draggable/drag-overlay.md) component.
+  {% endhint %}
 
 Converting the `transform` object to a string can feel tedious. Fear not, you can avoid having to do this by hand by importing the `CSS` utility from the `@dnd-kit/utilities` package:&#x20;
 
 ```jsx
-import {CSS} from '@dnd-kit/utilities';
+import { CSS } from "@dnd-kit/utilities";
 
 // Within your component that receives `transform` from `useDraggable`:
 const style = {
   transform: CSS.Translate.toString(transform),
-}
+};
 ```
 
 ### Assembling all the pieces
@@ -136,55 +142,53 @@ In this example, we'll assume you want to move your `<Draggable>` component from
 
 ![](../.gitbook/assets/example.png)
 
-To do so, you'll want to listen to the `onDragEnd` event of  the `<DndContext>` to see if your draggable item was dropped over your droppable:
+To do so, you'll want to listen to the `onDragEnd` event of the `<DndContext>` to see if your draggable item was dropped over your droppable:
 
 {% tabs %}
 {% tab title="App.jsx" %}
-```jsx
-import React, {useState} from 'react';
-import {DndContext} from '@dnd-kit/core';
 
-import {Droppable} from './Droppable';
-import {Draggable} from './Draggable';
+```jsx
+import React, { useState } from "react";
+import { DndContext } from "@dnd-kit/core";
+
+import { Droppable } from "./Droppable";
+import { Draggable } from "./Draggable";
 
 function App() {
   const [isDropped, setIsDropped] = useState(false);
-  const draggableMarkup = (
-    <Draggable>Drag me</Draggable>
-  );
-  
+  const draggableMarkup = <Draggable>Drag me</Draggable>;
+
   return (
     <DndContext onDragEnd={handleDragEnd}>
       {!isDropped ? draggableMarkup : null}
-      <Droppable>
-        {isDropped ? draggableMarkup : 'Drop here'}
-      </Droppable>
+      <Droppable>{isDropped ? draggableMarkup : "Drop here"}</Droppable>
     </DndContext>
   );
-  
+
   function handleDragEnd(event) {
-    if (event.over && event.over.id === 'droppable') {
+    if (event.over && event.over.id === "droppable") {
       setIsDropped(true);
     }
   }
 }
 ```
+
 {% endtab %}
 
 {% tab title="Droppable.jsx" %}
+
 ```jsx
-import React from 'react';
-import {useDroppable} from '@dnd-kit/core';
+import React from "react";
+import { useDroppable } from "@dnd-kit/core";
 
 export function Droppable(props) {
-  const {isOver, setNodeRef} = useDroppable({
-    id: 'droppable',
+  const { isOver, setNodeRef } = useDroppable({
+    id: "droppable",
   });
   const style = {
-    color: isOver ? 'green' : undefined,
+    color: isOver ? "green" : undefined,
   };
-  
-  
+
   return (
     <div ref={setNodeRef} style={style}>
       {props.children}
@@ -192,22 +196,25 @@ export function Droppable(props) {
   );
 }
 ```
+
 {% endtab %}
 
 {% tab title="Draggable.jsx" %}
+
 ```jsx
-import React from 'react';
-import {useDraggable} from '@dnd-kit/core';
+import React from "react";
+import { useDraggable } from "@dnd-kit/core";
 
 export function Draggable(props) {
-  const {attributes, listeners, setNodeRef, transform} = useDraggable({
-    id: 'draggable',
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    id: "draggable",
   });
-  const style = transform ? {
-    transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-  } : undefined;
+  const style = transform
+    ? {
+        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
+      }
+    : undefined;
 
-  
   return (
     <button ref={setNodeRef} style={style} {...listeners} {...attributes}>
       {props.children}
@@ -215,10 +222,11 @@ export function Draggable(props) {
   );
 }
 ```
+
 {% endtab %}
 {% endtabs %}
 
-That's it! You've set up your first [**Droppable**](../api-documentation/droppable/) **** and [**Draggable**](../api-documentation/draggable/) components.
+That's it! You've set up your first [**Droppable**](../api-documentation/droppable/) \***\* and [**Draggable\*\*](../api-documentation/draggable/) components.
 
 ### Pushing things a bit further
 
@@ -228,19 +236,18 @@ Here's a slightly more complex example that contains multiple **Droppable** cont
 
 {% tabs %}
 {% tab title="App.jsx" %}
-```jsx
-import React, {useState} from 'react';
-import {DndContext} from '@dnd-kit/core';
 
-import {Droppable} from './Droppable';
-import {Draggable} from './Draggable';
+```jsx
+import React, { useState } from "react";
+import { DndContext } from "@dnd-kit/core";
+
+import { Droppable } from "./Droppable";
+import { Draggable } from "./Draggable";
 
 function App() {
-  const containers = ['A', 'B', 'C'];
+  const containers = ["A", "B", "C"];
   const [parent, setParent] = useState(null);
-  const draggableMarkup = (
-    <Draggable id="draggable">Drag me</Draggable>
-  );
+  const draggableMarkup = <Draggable id="draggable">Drag me</Draggable>;
 
   return (
     <DndContext onDragEnd={handleDragEnd}>
@@ -250,37 +257,38 @@ function App() {
         // We updated the Droppable component so it would accept an `id`
         // prop and pass it to `useDroppable`
         <Droppable key={id} id={id}>
-          {parent === id ? draggableMarkup : 'Drop here'}
+          {parent === id ? draggableMarkup : "Drop here"}
         </Droppable>
       ))}
     </DndContext>
   );
 
   function handleDragEnd(event) {
-    const {over} = event;
+    const { over } = event;
 
     // If the item is dropped over a container, set it as the parent
     // otherwise reset the parent to `null`
     setParent(over ? over.id : null);
   }
-};
+}
 ```
+
 {% endtab %}
 
 {% tab title="Droppable.jsx" %}
+
 ```jsx
-import React from 'react';
-import {useDroppable} from '@dnd-kit/core';
+import React from "react";
+import { useDroppable } from "@dnd-kit/core";
 
 export function Droppable(props) {
-  const {isOver, setNodeRef} = useDroppable({
+  const { isOver, setNodeRef } = useDroppable({
     id: props.id,
   });
   const style = {
-    color: isOver ? 'green' : undefined,
+    color: isOver ? "green" : undefined,
   };
-  
-  
+
   return (
     <div ref={setNodeRef} style={style}>
       {props.children}
@@ -288,22 +296,25 @@ export function Droppable(props) {
   );
 }
 ```
+
 {% endtab %}
 
 {% tab title="Draggable.jsx" %}
+
 ```jsx
-import React from 'react';
-import {useDraggable} from '@dnd-kit/core';
+import React from "react";
+import { useDraggable } from "@dnd-kit/core";
 
 export function Draggable(props) {
-  const {attributes, listeners, setNodeRef, transform} = useDraggable({
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: props.id,
   });
-  const style = transform ? {
-    transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-  } : undefined;
+  const style = transform
+    ? {
+        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
+      }
+    : undefined;
 
-  
   return (
     <button ref={setNodeRef} style={style} {...listeners} {...attributes}>
       {props.children}
@@ -311,6 +322,7 @@ export function Draggable(props) {
   );
 }
 ```
+
 {% endtab %}
 {% endtabs %}
 
