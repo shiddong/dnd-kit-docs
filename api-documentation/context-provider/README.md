@@ -73,7 +73,7 @@ interface Props {
 
 ### 事件处理函数
 
-从上面的 props 列表中可以看出，有各种由 `<DndContext>` 触发的事件，你可以监听这些事件并决定如何处理它们。
+从上面的 props 列表中可以看出，有多个由 `<DndContext>` 触发的事件，你可以监听这些事件并决定如何处理它们。
 
 可以监听的主要事件包括：
 
@@ -83,11 +83,11 @@ interface Props {
 
 #### `onDragMove`
 
-当 [draggable](../draggable/) 元素在移动时会触发该事件。取决于被激活的 [sensor](../sensors/#activators)，例如，移动 [鼠标指针](../sensors/pointer.md)或按下 [键盘](../sensors/keyboard.md) 的移动键。
+当 [draggable](../draggable/) 元素在移动时会触发该事件。取决于被激活的 [sensor](../sensors/#activators)，例如，移动[鼠标指针](../sensors/pointer.md)或按下[键盘](../sensors/keyboard.md)的方向键。
 
 #### `onDragOver`
 
-当一个 [draggable](../draggable/) 元素移动到一个 [droppable](../droppable/) 容器之上时会触发该事件。同时被触发的还有 **droppable** 容器的唯一标识符。
+当一个 [draggable](../draggable/) 元素移动到一个 [droppable](../droppable/) 容器之上时会触发该事件。同时被触发的还有 **droppable** 容器的唯一标识。
 
 #### `onDragEnd`
 
@@ -95,7 +95,7 @@ interface Props {
 
 该事件包含了激活的 **draggable** 元素的 `id`，以及它放置时的 `over` 元素信息。
 
-当 **draggable** 元素在放置时没有 [检测到碰撞](collision-detection-algorithms.md)，`over` 属性则为 `null`。如果检测到了碰撞，`over` 属性则包含放置时的那个 **droppable** 元素 `id`。
+当 **draggable** 元素在放置时没有[检测到碰撞](collision-detection-algorithms.md)，`over` 属性则为 `null`。如果检测到了碰撞，`over` 属性则包含放置时的那个 **droppable** 元素 `id`。
 
 {% hint style="info" %}
 
@@ -117,11 +117,11 @@ interface Props {
 
 {% page-ref page="../../guides/accessibility.md" %}
 
-#### Announcements
+#### 公告
 
-Use the `announcements` prop to customize the screen reader announcements that are announced in the live region when draggable items are picked up, moved over droppable regions, and dropped.
+使用 `announcements` 参数可以自定义屏幕阅读器的公告，当 draggable 元素被选中、移动到其他 droppable 区域以及放置时，会在活动区域中进行公告。
 
-The default announcements are:
+默认的公告如下：
 
 ```javascript
 const defaultAnnouncements = {
@@ -156,18 +156,16 @@ const defaultAnnouncements = {
 
 ### 自动滚动
 
-针对 `DndContext` 下的所有 sensors, 使用可选的布尔值类型 `autoScroll` 参数可以临时或永久地禁用自动滚动。
+针对 `DndContext` 下的所有 sensors, 使用可选的布尔值类型参数 `autoScroll` 可以临时或永久地禁用自动滚动。
 
-使用 sensor 的静态属性 `autoScrollEnabled` 也可以在单个 sensor 上禁用自动滚动。例如，[键盘 sensor](../sensors/keyboard.md) 在内部管理滚动，因此将其境台属性
+使用 sensor 的静态属性 `autoScrollEnabled` 也可以在单个 sensor 上禁用自动滚动。例如，[Keyboard sensor](../sensors/keyboard.md) 是在内部管理滚动，因此将其静态属性
 `autoScrollEnabled` 设置为 `false`。
 
 ### 碰撞检测
 
 使用 `collisionDetection` 参数可以自定义碰撞检测算法，对 `DndContext` provider 下的 draggable 节点与 droppable 区域进行碰撞检测。
 
-The default collision detection algorithm is the [rectangle intersection](collision-detection-algorithms.md#rectangle-intersection) algorithm.
-
-默认的碰撞检测算法是 [矩阵相交 rectangle intersection](collision-detection-algorithms.md#rectangle-intersection) 算法。
+默认的碰撞检测算法是[矩阵相交 (Rectangle intersection)](collision-detection-algorithms.md#rectangle-intersection) 算法。
 
 以下是内置的碰撞检测算法：
 
@@ -175,7 +173,7 @@ The default collision detection algorithm is the [rectangle intersection](collis
 - [最近中心点 Closest center](collision-detection-algorithms.md#closest-center)
 - [最近邻角 Closest corners](collision-detection-algorithms.md#closest-corners)
 
-你可以自定义一个碰撞检测算法，或对现有算法进行组合。
+你也可以自定义一个碰撞检测算法，或对现有的算法进行组合。
 
 想要了解更多，可以阅读碰撞检测指南：
 
@@ -185,9 +183,9 @@ The default collision detection algorithm is the [rectangle intersection](collis
 
 Sensors 是一个抽象的概念，用于检测不同的输入方式，以便触发拖动操作、响应移动、结束或取消操作。
 
-`DndContext` 默认的 sensors 是 [指针](../sensors/pointer.md) 与 [键盘](../sensors/keyboard.md)
+`DndContext` 默认的 sensors 是 [Pointer](../sensors/pointer.md) 与 [Keyboard](../sensors/keyboard.md)
 
-想要了解如何自定义 sensors 或者如何向 `DndContext` 传递不同的 sensors，清阅读 Sensors 指南：
+想要了解如何自定义 sensors 或者如何向 `DndContext` 传递不同的 sensors，请阅读 Sensors 指南：
 
 {% page-ref page="../sensors/" %}
 
@@ -196,8 +194,8 @@ Sensors 是一个抽象的概念，用于检测不同的输入方式，以便触
 Modifiers 可以让你动态地修改 sensors 检测到的移动坐标。它们可以应用于很多的使用场景，例如：
 
 - 将移动限制在单一坐标轴上
-- 将移动限制在 draggable 节点容器的边界矩形内
-- 将移动限制在 draggable 节点的滚动容器边界矩形内
+- 将移动限制在 draggable 节点容器的边框内
+- 将移动限制在 draggable 节点的滚动容器边框内
 - 施加阻力或夹紧运动
 
 想要了解更多关于如何使用 Modifiers，请阅读 Modifiers 指南：
@@ -208,7 +206,7 @@ Modifiers 可以让你动态地修改 sensors 检测到的移动坐标。它们�
 
 使用 `layoutMeasuring` 参数可以配置 `DndContext` 应当在何时、多久测量一次 droppable 元素。
 
-`frequency` 参数可以控制测量布局的频率。默认情况下，布局测量会被设置为 `optimized`，表示只基于 `strategy` 测量布局。
+`frequency` 参数可以控制测量布局的频率。默认情况下，布局测量会被设置为 `optimized`，表示仅基于 `strategy` 测量布局。
 
 可以指定以下策略之一：
 

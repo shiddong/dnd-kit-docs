@@ -40,8 +40,8 @@ npm install react react-dom
 Modifiers 可以让你动态地修改 sensors 检测到的移动坐标。它们可以应用于很多的使用场景，例如：
 
 - 将移动限制在单一坐标轴上
-- 将移动限制在 draggable 节点容器的边界矩形内
-- 将移动限制在 draggable 节点的滚动容器边界矩形内
+- 将移动限制在 draggable 节点容器的边框内
+- 将移动限制在 draggable 节点的滚动容器边框内
 - 施加阻力或夹紧运动
 
 Modifiers 代码库中包含了许多有用的 modifiers，可以应用于 [`DndContext`](../api-documentation/context-provider/) 以及 [`DraggableClone`](../api-documentation/draggable/drag-overlay.md)。
