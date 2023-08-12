@@ -71,7 +71,7 @@ interface Props {
 }
 ```
 
-### Event handlers
+### 事件处理函数
 
 从上面的 props 列表中可以看出，有各种由 `<DndContext>` 触发的事件，你可以监听这些事件并决定如何处理它们。
 
@@ -151,8 +151,6 @@ const defaultAnnouncements = {
 尽管这些默认的公告是相对合理的默认值，应该涵盖了大多数简单的使用场景，但最了解你的应用程序的还是你自己，强烈建议你自定义这些公告，以便为正在构建的应用程序提供更合适的屏幕阅读体验。
 
 #### 屏幕阅读器指令
-
-Use the `screenReaderInstructions` prop to customize the instructions that are read to screen readers when the focus is moved
 
 使用 `screenReaderInstructions` 来自定义当焦点移动时读给屏幕阅读器的指令。
 
