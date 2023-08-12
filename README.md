@@ -9,8 +9,8 @@ description: >-
 - **服务于 React：** 对外暴露了像 [`useDraggable`](api-documentation/draggable/usedraggable.md) 与 [`useDroppable`](api-documentation/droppable/usedroppable.md) 的 hooks，不需要你重构原来的应用或者添加额外的 DOM 包装节点。
 - **支持广泛的使用场景：** 比如列表、网格、多容器、多层级嵌套、可变大小的元素、虚拟列表、2D 游戏等场景。
 - **零依赖与模块化：** 核心库压缩后的大小约为 10kb，而且没有外部依赖。它仅仅使用了 React 内置的状态管理和 Context，非常的精简。
-- **内置了对多种输入方式的支持能力：** 包括指针、鼠标、触摸和键盘传感器。
-- **完全地可定制和可扩展：** 定制了每一处细节：动画、过渡、行为和风格。你也可以创建自己的传感器、碰撞检测算法和自定义按键绑定等等。
+- **内置了对多种输入方式的支持能力：** 包括指针、鼠标、触摸和键盘 sensors。
+- **完全地可定制和可扩展：** 定制了每一处细节：动画、过渡、行为和风格。你也可以创建自己的 sensors、碰撞检测算法和自定义按键绑定等等。
 - **无障碍：** 支持使用键盘进行操作，提供了合理的 aria 默认属性，内置了可定制的屏幕阅读器指示和动态更新区域。
 - **性能：** 它从设计层面就考虑到了性能，以便支持丝般顺滑的动画。
 - **预置：** 如果你需要创建一个可拖动排序的界面？可以看看 [`@dnd-kit/sortable`](presets/sortable/)，它是建立在 `@dnd-kit/core` 之上的一个薄层。未来还将会提供更多的预置能力。
@@ -19,8 +19,8 @@ description: >-
 
 **dnd kit** 的核心库暴露了两个主要的概念:
 
-- [可拖动元素](api-documentation/draggable/)
-- [可拖放区域](api-documentation/droppable/)
+- [draggable 元素](api-documentation/draggable/)
+- [droppable 区域](api-documentation/droppable/)
 
 使用 [`useDraggable`](api-documentation/draggable/usedraggable.md) 与 [`useDroppable`](api-documentation/droppable/usedroppable.md) 这两个 hooks 可以增强现有的组件，或者将它们结合起来创建既可拖动也可拖放的组件。
 
@@ -42,8 +42,8 @@ description: >-
 
 主要的扩展点包括:
 
-- [传感器-Sensors](api-documentation/sensors/)
-- [修改器-Modifiers](api-documentation/modifiers.md)
+- [Sensors](api-documentation/sensors/)
+- [Modifiers](api-documentation/modifiers.md)
 - [自定义碰撞检测算法](api-documentation/context-provider/collision-detection-algorithms.md#custom-collision-detection-strategies)
 
 ### 无障碍

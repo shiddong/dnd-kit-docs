@@ -1,20 +1,20 @@
 # DndContext
 
-## Application structure
+## 应用结构
 
 ### Context provider
 
-In order for your your [Droppable](../droppable/) and [Draggable](../draggable/) components to interact with each other, you'll need to make sure that the part of your React tree that uses them is nested within  a parent `<DndContext>` component. The `<DndContext>` provider makes use of the [React Context API](https://reactjs.org/docs/context.html) to share data between draggable and droppable components and hooks.
+为了使 [Droppable](../droppable/) 与 [Draggable](../draggable/) 组件能够彼此交互，需要让它们在同一个父级 `<DndContext>` 组件下。`<DndContext>` provider 使用 [React Context API](https://reactjs.org/docs/context.html) 在 **draggable**、**droppable** 组件与 hooks 之间共享数据。
 
-> React context provides a way to pass data through the component tree without having to pass props down manually at every level.
+> React context 提供了一种在深层组件树中传递数据的方式，而不需要通过 props 逐级向下透传。
 
-Therefore, components that use [`useDraggable`](../draggable/usedraggable.md), [`useDroppable`](../droppable/usedroppable.md)  or [`DragOverlay`](../draggable/drag-overlay.md) will need to be nested within a `DndContext` provider.
+因此，使用 [`useDraggable`](../draggable/usedraggable.md)、 [`useDroppable`](../droppable/usedroppable.md) 或 [`DragOverlay`](../draggable/drag-overlay.md) 的组件需要嵌套在一个 `DndContext` provider 中。
 
- They don't need to be direct descendants, but, there does need to be a parent `<DndContext>` provider somewhere higher up in the tree.
+它们可以不是 `<DndContext>` provider 的直接后代，只需要这个父级的 `<DndContext>` provider 处于组件树中的任一更高层级。
 
 ```jsx
-import React from 'react';
-import {DndContext} from '@dnd-kit/core';
+import React from "react";
+import { DndContext } from "@dnd-kit/core";
 
 function App() {
   return (
@@ -25,13 +25,13 @@ function App() {
 }
 ```
 
-### Nesting
+### 嵌套使用
 
-You may also nest `<DndContext>` providers within other `<DndContext>` providers to achieve nested draggable/droppable interfaces that are independent of one another.
+你还可以将 `<DndContext>` provider 嵌套在其他的 `<DndContext>` provider 中，实现相互独立的嵌套式 **draggable/droppable** 界面。
 
 ```jsx
-import React from 'react';
-import {DndContext} from '@dnd-kit/core';
+import React from "react";
+import { DndContext } from "@dnd-kit/core";
 
 function App() {
   return (
@@ -39,18 +39,16 @@ function App() {
       {/* Components that use `useDraggable`, `useDroppable` */}
       <DndContext>
         {/* ... */}
-        <DndContext>
-          {/* ... */}
-        </DndContext>
+        <DndContext>{/* ... */}</DndContext>
       </DndContext>
     </DndContext>
   );
 }
 ```
 
-When nesting `DndContext` providers, keep in mind that the `useDroppable` and `useDraggable` hooks will only have access to the other draggable and droppable nodes within that context.
+需要注意的是，在嵌套的 DndContext providers 中，`useDroppable` 和 `useDraggable` 只能访问当前上下文中的其他 **draggable** 和 **droppable** 节点。
 
-If multiple `DndContext` providers are listening for the same event, events will be captured by the first `DndContext` that contains a [Sensor](../sensors/) that is activated by that event, similar to how [events bubble in the DOM](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events#Event_bubbling_and_capture).
+如果多个 `DndContext` provider 在监听同一事件，那么事件将会由包含了被该事件所激活的 [Sensor](../sensors/) 的第一个 `DndContext` 捕获，类似于 [DOM 中的事件冒泡](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events#Event_bubbling_and_capture)。
 
 ## Props
 
@@ -75,45 +73,47 @@ interface Props {
 
 ### Event handlers
 
-As you can see from the list of props above, there are a number of different events emitted by `<DndContext>` that you can listen to and decide how to handle.
+从上面的 props 列表中可以看出，有各种由 `<DndContext>` 触发的事件，你可以监听这些事件并决定如何处理它们。
 
-The main events you can listen to are:
+可以监听的主要事件包括：
 
 #### `onDragStart`
 
-Fires when a drag event that meets the [activation constraints](../sensors/#concepts) for that [sensor ](../sensors/)happens, along with the unique identifier of the draggable element that was picked up.
+当发生一个满足 [sensor](../sensors/) [激活条件](../sensors/#concepts) 的拖动事件时会触发该事件，同时被触发的还有被选中的 **draggale** 元素的唯一标识。
 
 #### `onDragMove`
 
-Fires anytime as the [draggable](../draggable/) item is moved. Depending on the activated [sensor](../sensors/#activators), this could for example be as the [Pointer](../sensors/pointer.md) is moved or the [Keyboard](../sensors/keyboard.md) movement keys are pressed.
+当 [draggable](../draggable/) 元素在移动时会触发该事件。取决于被激活的 [sensor](../sensors/#activators)，例如，移动 [鼠标指针](../sensors/pointer.md)或按下 [键盘](../sensors/keyboard.md) 的移动键。
 
-#### `onDragOver` 
+#### `onDragOver`
 
-Fires when a [draggable](../draggable/) item is moved over a [droppable](../droppable/) container, along with the unique identifier of that droppable container.
+当一个 [draggable](../draggable/) 元素移动到一个 [droppable](../droppable/) 容器之上时会触发该事件。同时被触发的还有 **droppable** 容器的唯一标识符。
 
-#### `onDragEnd` 
+#### `onDragEnd`
 
-Fires after a draggable item is dropped. 
+当一个 **draggable** 元素被放置后会触发该事件。
 
-This event contains information about the active draggable `id` along with information on whether the draggable item was dropped `over`. 
+该事件包含了激活的 **draggable** 元素的 `id`，以及它放置时的 `over` 元素信息。
 
-If there are no [collisions detected](collision-detection-algorithms.md) when the draggable item is dropped, the `over` property will be `null`. If a collision is detected, the `over` property will contain the `id` of the droppable over which it was dropped.
+当 **draggable** 元素在放置时没有 [检测到碰撞](collision-detection-algorithms.md)，`over` 属性则为 `null`。如果检测到了碰撞，`over` 属性则包含放置时的那个 **droppable** 元素 `id`。
 
 {% hint style="info" %}
-It's important to understand that the `onDragEnd` event **does not move** [**draggable**](../draggable/) **items into** [**droppable**](../droppable/) **containers.** 
 
-Rather, it provides **information** about which draggable item was dropped and whether it was over a droppable container when it was dropped.
+需要理解的是 `onDragEnd` 事件**并不意味着已经将** [**draggable**](../draggable/) **元素放置于** [**droppable**](../droppable/) **容器中**。
 
-It is up to the **consumer** of `DndContext` to decide what to do with that information and how to react to it, for example, by updating \(or not\) its internal state in response to the event so that the items are declaratively rendered in a different parent droppable.
+相反，它只是提供了关于被放置的 draggable 元素以及将其放置后可能存在的 droppable 容器的信息。
+
+如何处理这些信息以及如何响应，是由 `DndContext` 的 **consumer** 决定的（对应于 provider），例如，通过更新（或不更新）其内部状态来响应该事件，从而声明式地使这些元素在不同的父级 droppable 容器中进行渲染。
+
 {% endhint %}
 
 #### `onDragCancel`
 
-Fires if a drag operation is cancelled, for example, if the user presses `escape` while dragging a draggable item.
+当拖动操作被取消时会触发该事件，例如，用户在拖动 draggable 元素时按下了 `escape` 键。
 
-### Accessibility
+### 无障碍
 
-For more details and best practices around accessibility of draggable and droppable components, read the accessibility section:
+有关 draggable 与 droppable 组件中无障碍性的更多细节和最佳实践，请阅读无障碍部分：
 
 {% page-ref page="../../guides/accessibility.md" %}
 
@@ -145,81 +145,85 @@ const defaultAnnouncements = {
   onDragCancel(id) {
     return `Dragging was cancelled. Draggable item ${id} was dropped.`;
   },
-}
+};
 ```
 
-While these default announcements are sensible defaults that should cover most simple use cases, you know your application best, and we highly recommend that you customize these to provide a screen reader experience that is more tailored to the use case you are building.
+尽管这些默认的公告是相对合理的默认值，应该涵盖了大多数简单的使用场景，但最了解你的应用程序的还是你自己，强烈建议你自定义这些公告，以便为正在构建的应用程序提供更合适的屏幕阅读体验。
 
-#### Screen reader instructions
+#### 屏幕阅读器指令
 
-Use the `screenReaderInstructions` prop to customize the instructions that are read to screen readers when the focus is moved 
+Use the `screenReaderInstructions` prop to customize the instructions that are read to screen readers when the focus is moved
 
-### Autoscroll
+使用 `screenReaderInstructions` 来自定义当焦点移动时读给屏幕阅读器的指令。
 
-Use the optional `autoScroll` boolean prop to temporarily or permanently disable auto-scrolling for all sensors used within this `DndContext`.
+### 自动滚动
 
-Auto-scrolling may also be disabled on an individual sensor basis using the static property `autoScrollEnabled` of the sensor. For example, the [Keyboard sensor](../sensors/keyboard.md) manages scrolling internally, and therefore has the static property `autoScrollEnabled` set to `false`.
+针对 `DndContext` 下的所有 sensors, 使用可选的布尔值类型 `autoScroll` 参数可以临时或永久地禁用自动滚动。
 
-### Collision detection
+使用 sensor 的静态属性 `autoScrollEnabled` 也可以在单个 sensor 上禁用自动滚动。例如，[键盘 sensor](../sensors/keyboard.md) 在内部管理滚动，因此将其境台属性
+`autoScrollEnabled` 设置为 `false`。
 
-Use the `collisionDetection` prop to customize the collision detection algorithm used to detect collisions between draggable nodes and droppable areas within the`DndContext` provider. 
+### 碰撞检测
+
+使用 `collisionDetection` 参数可以自定义碰撞检测算法，对 `DndContext` provider 下的 draggable 节点与 droppable 区域进行碰撞检测。
 
 The default collision detection algorithm is the [rectangle intersection](collision-detection-algorithms.md#rectangle-intersection) algorithm.
 
-The built-in collision detection algorithms are:
+默认的碰撞检测算法是 [矩阵相交 rectangle intersection](collision-detection-algorithms.md#rectangle-intersection) 算法。
 
-* [Rectangle intersection](collision-detection-algorithms.md#rectangle-intersection)
-* [Closest center](collision-detection-algorithms.md#closest-center)
-* [Closest corners](collision-detection-algorithms.md#closest-corners)
+以下是内置的碰撞检测算法：
 
-You may also build custom collision detection algorithms or compose existing ones.
+- [矩阵相交 Rectangle intersection](collision-detection-algorithms.md#rectangle-intersection)
+- [最近中心点 Closest center](collision-detection-algorithms.md#closest-center)
+- [最近邻角 Closest corners](collision-detection-algorithms.md#closest-corners)
 
-To learn more, read the collision detection guide:
+你可以自定义一个碰撞检测算法，或对现有算法进行组合。
+
+想要了解更多，可以阅读碰撞检测指南：
 
 {% page-ref page="collision-detection-algorithms.md" %}
 
 ### Sensors
 
-Sensors are an abstraction to detect different input methods in order to initiate drag operations, respond to movement and end or cancel the operation. 
+Sensors 是一个抽象的概念，用于检测不同的输入方式，以便触发拖动操作、响应移动、结束或取消操作。
 
-The default sensors used by `DndContext` are the [Pointer](../sensors/pointer.md) and [Keyboard](../sensors/keyboard.md) sensors.
+`DndContext` 默认的 sensors 是 [指针](../sensors/pointer.md) 与 [键盘](../sensors/keyboard.md)
 
-To learn how to customize sensors or how to pass different sensors to `DndContext`, read the Sensors guide:
+想要了解如何自定义 sensors 或者如何向 `DndContext` 传递不同的 sensors，清阅读 Sensors 指南：
 
 {% page-ref page="../sensors/" %}
 
 ### Modifiers
 
-Modifiers let you dynamically modify the movement coordinates that are detected by sensors. They can be used for a wide range of use cases, for example:
+Modifiers 可以让你动态地修改 sensors 检测到的移动坐标。它们可以应用于很多的使用场景，例如：
 
-* Restricting motion to a single axis
-* Restricting motion to the draggable node container's bounding rectangle 
-* Restricting motion to the draggable node's scroll container bounding rectangle
-* Applying resistance or clamping the motion
+- 将移动限制在单一坐标轴上
+- 将移动限制在 draggable 节点容器的边界矩形内
+- 将移动限制在 draggable 节点的滚动容器边界矩形内
+- 施加阻力或夹紧运动
 
-To learn more about how to use Modifiers, read the Modifiers guide:
+想要了解更多关于如何使用 Modifiers，请阅读 Modifiers 指南：
 
 {% page-ref page="../modifiers.md" %}
 
-### Layout measuring
+### 测量布局
 
-You can configure when and how often `DndContext`  should measure its droppable elements by using the `layoutMeasuring` prop. 
+使用 `layoutMeasuring` 参数可以配置 `DndContext` 应当在何时、多久测量一次 droppable 元素。
 
-The `frequency` argument controls how frequently layouts should be measured. By default, layout measuring is set to `optimized`, which only measures layouts based on the `strategy`.
+`frequency` 参数可以控制测量布局的频率。默认情况下，布局测量会被设置为 `optimized`，表示只基于 `strategy` 测量布局。
 
-Specify one of the following strategies:
+可以指定以下策略之一：
 
-* `LayoutMeasuringStrategy.WhileDragging`: Default behavior, only measure droppable elements right after dragging has begun.
+- `LayoutMeasuringStrategy.WhileDragging`: 默认行为，仅在拖动开始后测量 droppable 元素。
 
-  `LayoutMeasuringStrategy.BeforeDragging`:  Measure droppable elements before dragging begins and right after it ends. 
+- `LayoutMeasuringStrategy.BeforeDragging`: 在拖动开始前和结束后测量 droppable 元素。
 
-* `LayoutMeasuringStrategy.Always`: Measure droppable elements before dragging begins, right after dragging has begun, and after it ends.
+- `LayoutMeasuringStrategy.Always`: 在拖动开始前、开始后和结束后测量 droppable 元素。
 
-Example usage:
+使用案例：
 
 ```jsx
-import {DndContext, LayoutMeasuringStrategy} from '@dnd-kit/core';
+import { DndContext, LayoutMeasuringStrategy } from "@dnd-kit/core";
 
-<DndContext layoutMeasuring={{strategy: LayoutMeasuringStrategy.Always}} />
+<DndContext layoutMeasuring={{ strategy: LayoutMeasuringStrategy.Always }} />;
 ```
-

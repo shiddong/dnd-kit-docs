@@ -4,13 +4,13 @@
 
 ## Introduction
 
-- [介绍](introduction/installation.md)
+- [安装](introduction/installation.md)
 - [快速开始](introduction/getting-started.md)
 
 ## API Documentation
 
 - [DndContext](api-documentation/context-provider/README.md)
-  - [Collision detection algorithms](api-documentation/context-provider/collision-detection-algorithms.md)
+  - [碰撞检测算法](api-documentation/context-provider/collision-detection-algorithms.md)
   - [useDndContext](api-documentation/context-provider/usedndcontext.md)
   - [useDndMonitor](api-documentation/context-provider/use-dnd-monitor.md)
 - [Droppable](api-documentation/droppable/README.md)
@@ -37,4 +37,4 @@
 
 ## Terms
 
-- [术语对照](terms/README.md)
+<!-- - [术语对照](terms/README.md) -->

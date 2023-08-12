@@ -1,4 +1,4 @@
-# 介绍
+# 安装
 
 开始使用 **@dnd-kit** 前，请先通过 `npm` 或 `yarn` 安装核心库：
 
@@ -37,11 +37,11 @@ npm install react react-dom
 
 ### Modifiers
 
-Modifiers 能够让你动态地修改 sensors 所检测到的移动坐标。它们可以在很多的使用场景中用到，例如：
+Modifiers 可以让你动态地修改 sensors 检测到的移动坐标。它们可以应用于很多的使用场景，例如：
 
 - 将移动限制在单一坐标轴上
-- 将移动限制在 **draggable** 节点容器的边界矩形内
-- 将移动限制在 **draggable** 节点的滚动容器边界矩形内
+- 将移动限制在 draggable 节点容器的边界矩形内
+- 将移动限制在 draggable 节点的滚动容器边界矩形内
 - 施加阻力或夹紧运动
 
 Modifiers 代码库中包含了许多有用的 modifiers，可以应用于 [`DndContext`](../api-documentation/context-provider/) 以及 [`DraggableClone`](../api-documentation/draggable/drag-overlay.md)。
