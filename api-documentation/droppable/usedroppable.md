@@ -14,7 +14,7 @@ interface UseDroppableArguments {
 
 ### 标识符
 
-参数 `id` 是一个 `string` 或 `number` 类型的唯一标识符。在某个 [`DndContext`](../context-provider/) provider 下不应存在其他的 **droppable** 元素使用同一个标识符。
+参数 `id` 是一个 `string` 或 `number` 类型的唯一标识符，即在某个 [`DndContext`](../context-provider/) provider 下不应存在其他的 **droppable** 元素使用同一个标识符。
 
 当你同时使用 `useDroppable` 和 `useDraggable` 创建一个组件时，它们是可以使用同一个标识符的，因为 droppable 与 draggable 元素不是存储在同一个键值对之中。
 

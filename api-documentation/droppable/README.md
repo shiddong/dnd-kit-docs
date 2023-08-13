@@ -6,9 +6,9 @@
 
 ## 使用方式
 
-`useDroppable` 对应用程序的结构没有特别的要求。
+`useDroppable` 对应用程序的代码结构没有特别的要求。
 
-但至少需要将 `useDroppable` 中返回的 `setNodeRef` 函数传递给 DOM 元素，这样它才能注册并跟踪底层的 DOM 节点，从而检测它与其他的 draggable 元素是否存在碰撞或相交。
+但至少需要将 `useDroppable` 中返回的 `setNodeRef` 函数传递给 DOM 元素，这样它才能对底层的 DOM 节点进行注册，并通过保持对它的跟踪，从而检测它与其他的 draggable 元素是否发生碰撞或相交。
 
 {% hint style="info" %}
 如果你是刚接触 `ref` 的概念，推荐你先看看 React 官方文档中的相关文章 [Refs 与 DOM](https://reactjs.org/docs/refs-and-the-dom.html#adding-a-ref-to-a-dom-element)
