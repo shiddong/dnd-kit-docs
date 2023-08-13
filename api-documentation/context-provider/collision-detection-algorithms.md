@@ -1,143 +1,143 @@
 # Collision detection algorithms
 
-If you're familiar with how 2D games are built, you may have come across the notion of collision detection algorithms.
+如果你熟悉如何制作 2D 游戏，你可能已经了解过碰撞检测算法的概念。
 
-One of the simpler forms of collision detection is between two rectangles that are axis aligned — meaning rectangles that are not rotated. This form of collision detection is generally referred to as [Axis-Aligned Bounding Box](https://developer.mozilla.org/en-US/docs/Games/Techniques/2D\_collision\_detection#Axis-Aligned\_Bounding\_Box) (AABB).
+一个比较简单的形式是两个轴对齐的矩形之间的碰撞检测 —— 矩形没有发生旋转。这种形式的碰撞检测通常被称为 [Axis-Aligned Bounding Box](https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection#Axis-Aligned_Bounding_Box) (AABB).
 
-The built-in collision detection algorithms assume a rectangular bounding box.
+内置的碰撞检测算法假定有一个矩形边框。
 
-> The bounding box of an element is the smallest possible rectangle (aligned with the axes of that element's user coordinate system) that entirely encloses it and its descendants.\
-> – Source: [MDN](https://developer.mozilla.org/en-US/docs/Glossary/bounding\_box)
+> 一个元素的边框是完全包围了该元素及其子元素的最小可能矩形（与该元素的用户坐标系的轴对齐）。\
+> – 来源: [MDN](https://developer.mozilla.org/en-US/docs/Glossary/bounding_box)
 
-This means that even if the draggable or droppable nodes look round or triangular, their bounding boxes will still be rectangular:
+也就是说，不管 draggable 与 droppable 节点是一个圆形还是三角形，它们的边框仍然是一个矩形。
 
 ![](../../.gitbook/assets/axis-aligned-rectangle.png)
 
-If you'd like to use other shapes than rectangles for detecting collisions, build your own [custom collision detection algorithm](collision-detection-algorithms.md#custom-collision-detection-strategies).
+如果你想使用矩形以外的形状进行碰撞检测，可以创建一个自己的[自定义碰撞检测算法](collision-detection-algorithms.md#custom-collision-detection-strategies)。
 
-## Rectangle intersection
+## 矩形相交
 
-By default, [`DndContext`](./) uses the **rectangle intersection** collision detection algorithm.&#x20;
+默认情况下，[`DndContext`](./) 使用的就是**矩形相交**的碰撞检测算法。
 
-The algorithm works by ensuring there is no gap between any of the 4 sides of the rectangles. Any gap means a collision does not exist.
+该算法的工作原理是确保两个矩形的任意 4 条边之间是没有间隔的。任何的间隔都意味着不存在碰撞。
 
-This means that in order for a draggable item to be considered **over** a droppable area, there needs to be an intersection between both rectangles:
+所以为了使得一个 draggable 元素是 **over** 在一个 droppable 区域之上的，需要这两个矩形是相交的。
 
 ![](../../.gitbook/assets/rect-intersection-1-.png)
 
-## Closest center
+## 最近中心点
 
-While the rectangle intersection algorithm is well suited for most drag and drop use cases, it can be unforgiving, since it requires both the draggable and droppable bounding rectangles to come into direct contact and intersect.
+虽然矩形相交算法适用于大多数的拖放场景，但由于它要求 draggable 元素与 droppable 区域的矩形边框直接接触并相交，所以相对来说，是一种比较严格的方式。
 
-For some use cases, such as [sortable](../../presets/sortable/) lists, using a more forgiving collision detection algorithm is recommended.&#x20;
+而对于某些场景，比如[排序](../../presets/sortable/)列表，则更加推荐使用一个相对更宽容的碰撞检测算法。
 
-As its name suggests, the closest center algorithm finds the droppable container who's center is closest to  the center of the bounding rectangle of the active draggable item:
+顾名思义，最近中心点算法是找到某个中心点离当前 draggable 元素的矩形边框中心点最近的 droppable 容器：
 
 ![](../../.gitbook/assets/closest-center-2-.png)
 
-## Closest corners
+## 最近邻角
 
-Like to the closest center algorithm, the closest corner algorithm doesn't require the draggable and droppable rectangles to intersect.
+与最近中心点算法相似，最近邻角算法也不要求 draggable 元素与 droppable 区域的矩形边框直接相交。
 
-Rather, it measures the distance between all four corners of the active draggable item and the four corners of each droppable container to find the closest one.&#x20;
+而是测量当前的 draggable 元素的所有 4 个角与每个 droppable 区域的 4 个角的距离，从而找到最近的那个 droppable 区域。
 
 ![](../../.gitbook/assets/closest-corners.png)
 
-The distance is measured from the top left corner of the draggable item to the top left corner of the droppable bounding rectangle, top right to top right, bottom left to bottom left, and bottom right to bottom right.&#x20;
+如上图所示，距离测算方式是分别对 draggable 元素与 droppable 区域矩形边框的对应角进行计算：左上角对左上角，右上角对右上角，左下角对左下角，右下角对右下角。
 
-### **When should I use the closest corners algorithm instead of closest center?**
+### **何时该使用最近邻角算法而非最近中心点算法?**
 
-In most cases, the **closest center** algorithm works well, and is generally the recommended default for sortable lists because it provides a more forgiving experience than the **rectangle intersection algorithm**.
+在大多数情况下，**最近中心点算法** 效果很好，并且通常是排序列表场景下的默认推荐算法，因为它相较于**矩形相交算法**具有更为宽容的体验。
 
-In general, the closest center and closest corners algorithms will yield the same results. However, when building interfaces where droppable containers are stacked on top of one another, for example, when building a Kanban, the closest center algorithm can sometimes return the underlaying droppable of the entire Kanban column rather than the droppable areas within that column.&#x20;
+通常，最近中心点算法与最近邻角算法的效果一致。但某些情况下例外，例如在创建 droppable 容器相互堆叠的界面时，比如看板，最近中心点算法的结果有时会是整个看板列的下层 droppable 区域，而不是当前列中的 droppable 区域。
 
-![Closest center is 'A', though the human eye would likely expect 'A2'](../../.gitbook/assets/closest-center-kanban.png)
+![最近中心点是'A'，但人眼可能会看到'A2'](../../.gitbook/assets/closest-center-kanban.png)
 
-In those situations, the **closest corners** algorithm is preferred and will yield results that are more aligned with what the human eye would predict:
+在这些情况下，首选采用**最近邻角**算法，其结果更符合人眼的预测。
 
-![Closest corners is 'A2', as the human eye would expect.](../../.gitbook/assets/closest-corners-kanban.png)
+![正如人眼的预测，最近邻角是 'A2'](../../.gitbook/assets/closest-corners-kanban.png)
 
 ## Pointer within
 
-As its name suggests, the pointer within collision detection algorithm only registers collision when the pointer is contained within the bounding rectangle of other droppable containers.
+顾名思义，pointer within 碰撞检测算法仅仅在指针进入到其他 droppable 容器的边界矩形时才会记录碰撞。
 
-This collision detection algorithm is well suited for high precision drag and drop interfaces.
+这种碰撞检测算法非常适合于高精度的拖放页面。
 
 {% hint style="info" %}
-As its name suggests, this collision detection algorithm **only works with pointer-based sensors**. For this reason, we suggest you use [composition of collision detection algorithms](collision-detection-algorithms.md#composition-of-existing-algorithms) if you intend to use the `pointerWithin` collision detection algorithm so that you can fall back to a different collision detection algorithm for the Keyboard sensor.
+
+顾名思义，这种碰撞检测算法**仅仅适用于基于指针的 sensors**。所以，如果你想使用 `pointerWithin` 碰撞检测算法的话，建议使用[组合的碰撞检测算法](collision-detection-algorithms.md#composition-of-existing-algorithms)，这样可以为键盘 sensor 回退到其他形式的碰撞检测算法。
 {% endhint %}
 
-## Custom collision detection algorithms
+## 自定义碰撞检测算法
 
-In advanced use cases, you may want to build your own collision detection algorithms if the ones provided out of the box do not suit your use case.
+在更高级别的使用场景中，可能我们提供的这些碰撞检测算法不适用，那么你需要自定义一个碰撞检测算法。
 
-You can either write a new collision detection algorithm from scratch, or compose two or more existing collision detection algorithms.
+你可以从零开始编写一个新的碰撞检测算法，也可以对现有的两种或多种算法进行组合使用。
 
-### Composition of existing algorithms
+### 现有算法的组合使用
 
-Sometimes, you don't need to build custom collision detection algorithms from scratch. Instead, you can compose existing collision algorithms to augment them.
+有时候，你不需要从头开始编写一个自定义的碰撞检测算法。你完全可以组合现有的碰撞算法来增强它们。
 
-A common example of this is when using the `pointerWithin` collision detection algorithm. As its name suggest, this collision detection algorithm depends on pointer coordinates, and therefore does not work when using other sensors like the Keyboard sensor. It's also a very high precision collision detection algorithm, so it can sometimes be helpful to fall back to a more tolerant collision detection algorithm when the `pointerWithin` algorithm does not return any collisions.
+一个比较常见的例子是使用 `pointerWithin` 碰撞检测算法。顾名思义，这种算法依赖于指针坐标，而且在使用键盘 sensor 时不起作用。它也是一种非常高精度的碰撞检测算法，所以它可以在没有发生碰撞记录时回退到更宽容的算法形式。
 
 ```javascript
-import {pointerWithin, rectIntersection} from '@dnd-kit/core';
+import { pointerWithin, rectIntersection } from "@dnd-kit/core";
 
 function customCollisionDetectionAlgorithm(args) {
-  // First, let's see if there are any collisions with the pointer
+  // 首先，看看根据指针是否能检测到任何碰撞
   const pointerCollisions = pointerWithin(args);
-  
-  // Collision detection algorithms return an array of collisions
+
+  // 碰撞检测算法会返回一个产生碰撞的列表
   if (pointerCollisions.length > 0) {
     return pointerCollisions;
   }
-  
-  // If there are no collisions with the pointer, return rectangle intersections
+
+  // 若根据指针没有检测到碰撞，则使用矩形相交算法
   return rectIntersection(args);
-};
+}
 ```
 
-Another example where composition of existing algorithms can be useful is if you want some of your droppable containers to have a different collision detection algorithm than the others.&#x20;
+算法组合的另一个例子是，对某些 droppable 容器与其他的容器提供不一样的碰撞检测算法。
 
-For instance, if you were building a sortable list that also supported moving items to a trash bin, you may want to compose both the `closestCenter` and `rectangleIntersection` collision detection algorithms.
+例如，当你开发一个排序列表，同时也支持将列表中某些元素移入到垃圾桶中，那么你可以组合使用`最近中心点`和`矩阵相交`碰撞检测算法。
 
-![Use the closest corners algorithm for all droppables except 'trash'.](../../.gitbook/assets/custom-collision-detection.png)
+![对除垃圾桶以外的所有 droppable 容器使用最近邻角算法](../../.gitbook/assets/custom-collision-detection.png)
 
-![Use the intersection detection algorithm for the 'trash' droppable.](../../.gitbook/assets/custom-collision-detection-intersection.png)
+![对于垃圾桶使用矩阵相交算法](../../.gitbook/assets/custom-collision-detection-intersection.png)
 
 From an implementation perspective, the custom intersection algorithm described in the example above would look like:
 
-```javascript
-import {closestCorners, rectIntersection} from '@dnd-kit/core';
+从代码实现的角度看，上述示例中的自定义相交算法如下所示：
 
-function customCollisionDetectionAlgorithm({
-  droppableContainers,
-  ...args,
-}) {
-  // First, let's see if the `trash` droppable rect is intersecting
+```javascript
+import { closestCorners, rectIntersection } from "@dnd-kit/core";
+
+function customCollisionDetectionAlgorithm({ droppableContainers, ...args }) {
+  // 首先，看看垃圾桶的矩形边框是否相交
   const rectIntersectionCollisions = rectIntersection({
     ...args,
-    droppableContainers: droppableContainers.filter(({id}) => id === 'trash')
+    droppableContainers: droppableContainers.filter(({ id }) => id === "trash"),
   });
-  
-  // Collision detection algorithms return an array of collisions
+
+  // 碰撞检测算法会返回一个产生碰撞的列表
   if (rectIntersectionCollisions.length > 0) {
-    // The trash is intersecting, return early
+    // 当垃圾桶的矩形边框发生相交，则提前返回
     return rectIntersectionCollisions;
   }
-  
-  // Compute other collisions
+
+  // 若没有发生，则采用其他碰撞检测形式
   return closestCorners({
     ...args,
-    droppableContainers: droppableContainers.filter(({id}) => id !== 'trash')
+    droppableContainers: droppableContainers.filter(({ id }) => id !== "trash"),
   });
-};
+}
 ```
 
-### Building custom collision detection algorithms
+### 创建自定义碰撞检测算法
 
-For advanced use cases or to detect collision between non-rectangular or non-axis aligned shapes, you'll want to build your own collision detection algorithms.
+对于更高级的使用场景或检测非矩形、非轴对齐形状之间的碰撞，你需要自定义一个碰撞检测算法。
 
-Here's an example to [detect collisions between circles](https://developer.mozilla.org/en-US/docs/Games/Techniques/2D\_collision\_detection#Circle\_Collision) instead of rectangles:
+下面是一个[检测圆形之间碰撞](https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection#Circle_Collision)的例子。
 
 ```javascript
 /**
@@ -196,4 +196,4 @@ function circleIntersection({
 };
 ```
 
-To learn more, refer to the implementation of the built-in collision detection algorithms.
+想要了解更多信息，请参考内置碰撞检测算法的实现。

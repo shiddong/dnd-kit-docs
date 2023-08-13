@@ -1,6 +1,6 @@
 # useDndMonitor
 
-在 `DndContext` provider 所包裹的组件下使用 `useDndMonitor` hook，可以监听发生在 `DndContext` 中的拖放事件。
+在 `DndContext` provider 所包裹的组件下使用 `useDndMonitor` hook，可以监听发生在 `DndContext` 中的各种拖放事件。
 
 ```jsx
 import { DndContext, useDndMonitor } from "@dnd-kit/core";
