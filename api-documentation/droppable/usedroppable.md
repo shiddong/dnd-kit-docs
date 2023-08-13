@@ -2,7 +2,7 @@
 
 ![](../../.gitbook/assets/droppable-1-.png)
 
-## Arguments
+## 参数
 
 ```typescript
 interface UseDroppableArguments {
@@ -12,24 +12,24 @@ interface UseDroppableArguments {
 }
 ```
 
-### Identifier
+### 标识符
 
-The `id` argument is a `string` or `number` that should be a unique identifier, meaning there should be no other **droppable** elements that share that same identifier within a given [`DndContext`](../context-provider/) provider.
+参数 `id` 是一个 `string` 或 `number` 类型的唯一标识符。在某个 [`DndContext`](../context-provider/) provider 下不应存在其他的 **droppable** 元素使用同一个标识符。
 
-If you're building a component that uses both the `useDroppable` and `useDraggable` hooks, they can both share the same identifier since droppable elements are stored in a different key-value store than draggable elements.
+当你同时使用 `useDroppable` 和 `useDraggable` 创建一个组件时，它们是可以使用同一个标识符的，因为 droppable 与 draggable 元素不是存储在同一个键值对之中。
 
-### Disabled
+### 禁用
 
-Since [hooks cannot be conditionally invoked](https://reactjs.org/docs/hooks-rules.html), use the `disabled` argument and set it to `true` if you need to temporarily disable a `droppable` area.
+由于[不能在条件语句中调用 hook](https://reactjs.org/docs/hooks-rules.html)，所以当你需要临时禁用某个 `droppable` 区域时，可以将 `disabled` 参数设置为 `true`。
 
-### Data
+### 数据
 
-The `data` argument is for advanced use-cases where you may need access to additional data about the droppable element in event handlers, modifiers or custom sensors.
+在一些复杂的使用场景中，你可能需要在事件处理函数、modifiers 或自定义的 sensors 中访问关于 droppable 元素的一些数据，此时可以使用 `data` 参数。
 
-For example, if you were building a sortable preset, you could use the `data` attribute to store the index of the droppable element within a sortable list to access it within a custom sensor.
+例如，当你正在开发一个可排序的预置能力，你可以使用 `data` 属性来存储排序列表中 droppable 元素的索引，便于在自定义的 sensor 中访问它。
 
 ```jsx
-const {setNodeRef} = useDroppable({
+const { setNodeRef } = useDroppable({
   id: props.id,
   data: {
     index: props.index,
@@ -37,16 +37,16 @@ const {setNodeRef} = useDroppable({
 });
 ```
 
-Another more advanced example where the `data` argument can be useful is create relationships between draggable nodes and droppable areas, for example, to specify which types of draggable nodes your droppable accepts:
+另一个更复杂的例子是，`data` 参数有助于在 draggable 节点与 droppable 区域之间建立关联，例如，通过它可以指定某个 droppable 区域可以接收哪些类型的 draggable 节点。
 
 ```jsx
-import {DndContext, useDraggable, useDroppable} from '@dnd-kit/core';
+import { DndContext, useDraggable, useDroppable } from "@dnd-kit/core";
 
 function Droppable() {
-  const {setNodeRef} = useDroppable({
-    id: 'droppable',
+  const { setNodeRef } = useDroppable({
+    id: "droppable",
     data: {
-      accepts: ['type1', 'type2'],
+      accepts: ["type1", "type2"],
     },
   });
 
@@ -54,10 +54,10 @@ function Droppable() {
 }
 
 function Draggable() {
-  const {attributes, listeners, setNodeRef, transform} = useDraggable({
-    id: 'draggable',
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    id: "draggable",
     data: {
-      type: 'type1',
+      type: "type1",
     },
   });
 
@@ -65,23 +65,19 @@ function Draggable() {
 }
 
 function App() {
-  return (
-    <DndContext onDragEnd={handleDragEnd}>
-      /* ... */
-    </DndContext>
-  );
-  
+  return <DndContext onDragEnd={handleDragEnd}>/* ... */</DndContext>;
+
   function handleDragEnd(event) {
-    const {active, over} = event;
+    const { active, over } = event;
 
     if (over && over.data.current.accepts.includes(active.data.current.type)) {
-      // do stuff
+      // 处理逻辑
     }
   }
 }
 ```
 
-## Properties
+## 属性
 
 ```typescript
 {
@@ -97,38 +93,32 @@ function App() {
 
 #### `setNodeRef`
 
-In order for the `useDroppable` hook to function properly, it needs the `setNodeRef` property to be attached to the HTML element you intend on turning into a droppable area:
+为了使 `useDroppable` 能够正常工作，需要将 `setNodeRef` 属性附加在想要成为 droppable 区域的 HTML 元素上。
 
 ```jsx
 function Droppable(props) {
-  const {setNodeRef} = useDroppable({
+  const { setNodeRef } = useDroppable({
     id: props.id,
   });
-  
-  return (
-    <div ref={setNodeRef}>
-      {/* ... */}
-    </div>
-  );
+
+  return <div ref={setNodeRef}>{/* ... */}</div>;
 }
 ```
 
 #### `node`
 
-A [ref](https://reactjs.org/docs/refs-and-the-dom.html) to the current node that is passed to `setNodeRef`
+当前节点的[引用](https://reactjs.org/docs/refs-and-the-dom.html)，其接收了传递的 `setNodeRef` 参数
 
 #### `rect`
 
-For advanced use cases, if you need the bounding rect measurement of the droppable area.
+对于某些复杂的场景，可能需要当前 droppable 区域的边界矩形测量数据。
 
 ### Over
 
 #### `isOver`
 
-Use the `isOver` boolean returned by the `useDroppable` hook to change the appearance or content displayed when a `draggable` element is dragged over your droppable container.&#x20;
+当某个 `draggable` 元素被拖动到 droppable 区域时，可以通过 `useDroppable` 返回的布尔值类型的 `isOver` 属性改变其显示的外观或内容。
 
 #### `over`
 
-If you'd like to change the appearance of the droppable in response to a draggable being dragged over a different droppable container, check whether the `over` value is defined. Depending on your use-case, you can also read the `id` of the other droppable that the draggable item to make changes to the render output of your droppable component.
-
-####
+如果你想要改变 droppable 元素的外观，以响应 draggable 元素被拖动到不同的 droppable 容器之上，可以检查是否定义了 `over` 值。根据使用场景，也可以通过 `id` 属性对 其他 droppable 组件的渲染输出进行修改
