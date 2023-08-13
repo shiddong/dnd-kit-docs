@@ -1,13 +1,13 @@
-# Table of contents
+# 目录
 
 - [概述](README.md)
 
-## Introduction
+## 介绍
 
 - [安装](introduction/installation.md)
 - [快速开始](introduction/getting-started.md)
 
-## API Documentation
+## API 文档
 
 - [DndContext](api-documentation/context-provider/README.md)
   - [碰撞检测算法](api-documentation/context-provider/collision-detection-algorithms.md)
@@ -25,16 +25,17 @@
   - [Keyboard](api-documentation/sensors/keyboard.md)
 - [Modifiers](api-documentation/modifiers.md)
 
-## Presets
+## 预置能力
 
 - [Sortable](presets/sortable/README.md)
   - [Sortable Context](presets/sortable/sortable-context.md)
   - [useSortable](presets/sortable/usesortable.md)
 
-## Guides
+## 指南
 
 - [Accessibility](guides/accessibility.md)
 
-## Terms
+## 说明
 
 <!-- - [术语对照](terms/README.md) -->
+<!-- - [名词解释](terms/README.md) -->
