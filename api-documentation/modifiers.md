@@ -1,103 +1,98 @@
 # Modifiers
 
-Modifiers let you dynamically modify the movement coordinates that are detected by sensors. They can be used for a wide range of use cases, for example:
+Modifiers 可以让你动态地修改 sensors 检测到的移动坐标。它们可以应用于很多的使用场景，例如：
 
-* Restricting motion to a single axis
-* Restricting motion to the draggable node container's bounding rectangle 
-* Restricting motion to the draggable node's scroll container bounding rectangle
-* Applying resistance or clamping the motion
+- 将移动限制在单一坐标轴上
+- 将移动限制在 draggable 节点容器的矩形边框内
+- 将移动限制在 draggable 节点的滚动容器矩形边框内
+- 施加阻力或夹紧运动
 
-## Installation
+## 安装
 
-To start using modifiers, install the modifiers package via yarn or npm:
+开始使用 modifiers 前，请先通过 `yarn` 或 `npm` 安装依赖包。
 
 ```
 npm install @dnd-kit/modifiers
 ```
 
-## Usage
+## 使用方式
 
-The modifiers repository contains a number of useful modifiers that can be applied on [`DndContext`](context-provider/) as well as [`DragOverlay`](draggable/drag-overlay.md).
+`@dnd-kit/modifiers` 包中提供了很多有用的 modifiers，可以应用到 [`DndContext`](context-provider/) 和 [`DragOverlay`](draggable/drag-overlay.md) 中。
 
 ```jsx
-import {DndContext, DragOverlay} from '@dnd-kit';
+import { DndContext, DragOverlay } from "@dnd-kit";
 import {
   restrictToVerticalAxis,
   restrictToWindowEdges,
-} from '@dnd-kit/modifiers';
+} from "@dnd-kit/modifiers";
 
 function App() {
   return (
     <DndContext modifiers={[restrictToVerticalAxis]}>
       {/* ... */}
-      <DragOverlay modifiers={[restrictToWindowEdges]}>
-        {/* ... */}
-      </DragOverlay>
+      <DragOverlay modifiers={[restrictToWindowEdges]}>{/* ... */}</DragOverlay>
     </DndContext>
-  )
+  );
 }
 ```
 
-As you can see from the example above, `DndContext` and `DragOverlay` can both have different modifiers.
+从上面的示例中可以看出，在 `DndContext` 和 `DragOverlay` 中都可以使用不同的 modifiers。
 
-## Built-in modifiers
+## 内置的 modifiers
 
-### Restricting motion to an axis
+### 将移动限制在单一坐标轴上
 
 #### `restrictToHorizontalAxis`
 
-Restrict movement to only the horizontal axis.
+将移动限制在横向坐标轴上。
 
 #### `restrictToVerticalAxis`
 
-Restrict movement to only the vertical axis.
+将移动限制在纵向坐标轴上。
 
-### Restrict motion to a container's bounding rectangle
+### 将移动限制在一个容器的矩形边框内
 
 #### `restrictToWindowEdges`
 
-Restrict movement to the edges of the window. This modifier can be useful to prevent the `DragOverlay` from being moved outside of the bounds of the window.
+将移动限制在窗口的边缘处。该 modifier 可以有效地阻止 `DragOverlay` 移出窗口的边界。
 
 #### `restrictToParentElement`
 
-Restrict movement to the parent element of the draggable item that is picked up.
+将移动限制在被选中的 draggale 元素的父元素内。
 
 #### `restrictToFirstScrollableAncestor`
 
-Restrict movement to the first scrollable ancestor of the draggable item that is picked up.
+将移动限制在被选中的 draggable 元素的第一个可滚动的上层元素内。
 
-### Snap to grid
+### 网格对齐
 
 #### `createSnapModifier`
 
-Function to create modifiers to snap to a given grid size. 
+该函数的作用是创建 modifiers 以实现对齐给定大小的网格。
 
 ```javascript
-import {createSnapModifier} from '@dnd-kit/modifiers';
+import { createSnapModifier } from "@dnd-kit/modifiers";
 
 const gridSize = 20; // pixels
 const snapToGridModifier = createSnapModifier(gridSize);
 ```
 
-## Building custom modifiers
+## 创建自定义的 modifiers
 
-To build your own custom modifiers, refer to the implementation of the built-in modifiers of `@dnd-kit/modifiers`: [https://github.com/clauderic/dnd-kit/tree/master/packages/modifiers/src](https://github.com/clauderic/dnd-kit/tree/master/packages/modifiers/src)
+参考 `@dnd-kit/modifiers` 内置的 modifiers 实现，可以创建自定义的 modifiers: [https://github.com/clauderic/dnd-kit/tree/master/packages/modifiers/src](https://github.com/clauderic/dnd-kit/tree/master/packages/modifiers/src)
 
-For example, here is an implementation to create a modifier to snap to grid:
+例如，下面的代码就创建了一个 modifier 可以实现网格对齐：
 
 ```javascript
 const gridSize = 20;
 
 function snapToGrid(args) {
-  const {transform} = args;
-  
+  const { transform } = args;
+
   return {
     ...transform,
     x: Math.ceil(transform.x / gridSize) * gridSize,
     y: Math.ceil(transform.y / gridSize) * gridSize,
   };
- }
+}
 ```
-
-
-
