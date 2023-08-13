@@ -13,7 +13,7 @@
 
 ![](../../.gitbook/assets/axis-aligned-rectangle.png)
 
-如果你想使用矩形以外的形状进行碰撞检测，可以创建一个自己的[自定义碰撞检测算法](collision-detection-algorithms.md#custom-collision-detection-strategies)。
+如果你想使用矩形以外的形状进行碰撞检测，可以创建一个自己的[自定义碰撞检测算法](collision-detection-algorithms.md#zi-ding-yi-peng-zhuang-jian-ce-suan-fa)。
 
 ## 矩形相交
 
@@ -65,7 +65,7 @@
 
 {% hint style="info" %}
 
-顾名思义，这种碰撞检测算法**仅仅适用于基于指针的 sensors**。所以，如果你想使用 `pointerWithin` 碰撞检测算法的话，建议使用[组合的碰撞检测算法](collision-detection-algorithms.md#composition-of-existing-algorithms)，这样可以为键盘 sensor 回退到其他形式的碰撞检测算法。
+顾名思义，这种碰撞检测算法**仅仅适用于基于指针的 sensors**。所以，如果你想使用 `pointerWithin` 碰撞检测算法的话，建议使用[组合的碰撞检测算法](collision-detection-algorithms.md#zu-he-xian-you-de-peng-zhuang-jian-ce-suan-fa)，这样可以为键盘 sensor 回退到其他形式的碰撞检测算法。
 {% endhint %}
 
 ## 自定义碰撞检测算法
@@ -74,7 +74,7 @@
 
 你可以从零开始编写一个新的碰撞检测算法，也可以对现有的两种或多种算法进行组合使用。
 
-### 现有算法的组合使用
+### 组合现有的碰撞检测算法
 
 有时候，你不需要从头开始编写一个自定义的碰撞检测算法。你完全可以组合现有的碰撞算法来增强它们。
 
