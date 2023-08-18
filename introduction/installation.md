@@ -37,7 +37,7 @@ npm install react react-dom
 
 ### Modifiers
 
-Modifiers 可以让你动态地修改 sensors 检测到的移动坐标。它们可以应用于很多的使用场景，例如：
+利用 Modifiers 可以动态地修改 sensors 检测到的移动坐标。它们的使用场景非常广泛，例如：
 
 - 将移动限制在单一坐标轴上
 - 将移动限制在 draggable 节点容器的边框内
