@@ -33,7 +33,7 @@
 
 ## 指南
 
-- [Accessibility](guides/accessibility.md)
+- [无障碍指南](guides/accessibility.md)
 
 ## 说明
 

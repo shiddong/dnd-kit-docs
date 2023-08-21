@@ -131,32 +131,39 @@ CSS.Translate.toString(transform) ===
 
 The `useDraggable` hook \*\*\*\* provides a set of sensible default attributes for draggable items. We recommend you attach these to the HTML element you are attaching the draggable listeners to.
 
+`useDraggable` 为 draggable 元素提供了合理的默认属性集。推荐你为附加了 draggable listeners 的 HTML 元素也同时附加上这些属性。
+
 We encourage you to manually attach the attributes that you think make sense in the context of your application rather than using them all without considering whether it makes sense to do so.
+
+最好是能够手动的选择具有语义的属性，而不是在无脑地直接全部使用。
 
 For example, if the HTML element you are attaching the `useDraggable` `listeners` to is already a semantic `button`, although it's harmless to do so, there's no need to add the `role="button"` attribute, since that is already the default role.&#x20;
 
-| Attribute              | Default value             | Description                                                                                                                                                                                                                                                                                         |
+比如，如果附加了 `useDraggable` 导出的 `listeners` 的 HTML 元素本身就是一个语义化的 `button`，由于它已经具有默认的 role 属性，就没有必要再为其设置属性 `role="button"`，尽管没什么影响。
+
+| 属性                   | 默认值                    | 描述                                                                                                                                                                                                                                                                                                |
 | ---------------------- | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `role`                 | `"button"`                | <p>If possible, we recommend you use a semantic <code>&#x3C;button></code> element for the DOM element you plan on attaching draggable listeners to. </p><p></p><p>In case that's not possible, make sure you include the <code>role="button"</code>attribute, which is the default value.</p>      |
+| `role`                 | `"button"`                | <p>如果可以，最好是使用语义化的 <code>&#x3C;button></code> 来表示附加 listeners 的 DOM 元素。 </p><p></p><p>如果不可以，需要包含属性 <code>role="button"</code>，这也是默认值。</p>                                                                                                                 |
 | `tabIndex`             | `"0"`                     | In order for your draggable elements to receive keyboard focus, they **need** to have the `tabindex` attribute set to `0` if they are not natively interactive elements (such as the HTML `button` element). For this reason, the `useDraggable` hook sets the `tabindex="0"` attribute by default. |
 | `aria-roledescription` | `"draggable"`             | While `draggable` is a sensible default, we recommend you customize this value to something that is tailored to the use case you are building.                                                                                                                                                      |
 | `aria-describedby`     | `"DndContext-[uniqueId]"` | Each draggable item is provided a unique `aria-describedby` ID that points to the [screen reader instructions](../context-provider/#screen-reader-instructions) to be read out when a draggable item receives focus.                                                                                |
 
 To learn more about the best practices for making draggable interfaces accessible, read the full accessibility guide:
+想要了解更多关于使 draggable 界面无障碍性的最佳实践，请阅读无障碍指南
 
 {% content-ref url="../../guides/accessibility.md" %}
 [accessibility.md](../../guides/accessibility.md)
 {% endcontent-ref %}
 
-### Recommendations
+### 推荐
 
 #### `touch-action`
 
-We highly recommend you specify the `touch-action` CSS property for all of your draggable elements.
+强烈推荐为所有的 draggable 元素指定 CSS 属性 `touch-action`。
 
 > The **`touch-action`** CSS property sets how an element's region can be manipulated by a touchscreen user (for example, by zooming features built into the browser).\
 > \
-> Source: [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action)
+> 来源: [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action)
 
 In general, we recommend you set the `touch-action` property to `none` for draggable elements in order to prevent scrolling on mobile devices.&#x20;
 
