@@ -106,9 +106,7 @@ function Draggable() {
 
 ### 转换
 
-In order to actually see your draggable items move on screen, you'll need to move the item using CSS. You can use inline styles, CSS variables, or even CSS-in-JS libraries to pass the `transform` property as CSS to your draggable element.
-
-为了真正地看到 draggable 元素在屏幕上的移动效果，需要用到 CSS 来移动它。可以使用内联样式、CSS 变量，甚至是 CSS-in-JS 库，将 `transform` 属性值作为 CSS 传递给 draggable 元素。
+为了真正地看到 draggable 元素在屏幕上的移动效果，需要用到 CSS 来移动它。你可以使用内联样式、CSS 变量，甚至是 CSS-in-JS 库，将 `transform` 属性值作为 CSS 传递给 draggable 元素。
 
 {% hint style="success" %}
 处于性能方面的考虑，强烈建议使用 CSS 的 **`transform`** 属性处理 draggable 元素在屏幕上的移动，其他的位置属性如 **`top`**、 **`left`** 或 **`margin`** 都会引起代价昂贵的重绘。了解更多关于 [CSS transforms](https://developer.mozilla.org/en-US/docs/Web/CSS/transform) 的信息。
@@ -129,27 +127,20 @@ CSS.Translate.toString(transform) ===
 
 ### 属性
 
-The `useDraggable` hook \*\*\*\* provides a set of sensible default attributes for draggable items. We recommend you attach these to the HTML element you are attaching the draggable listeners to.
-
 `useDraggable` 为 draggable 元素提供了合理的默认属性集。推荐你为附加了 draggable listeners 的 HTML 元素也同时附加上这些属性。
-
-We encourage you to manually attach the attributes that you think make sense in the context of your application rather than using them all without considering whether it makes sense to do so.
 
 最好是能够手动的选择具有语义的属性，而不是在无脑地直接全部使用。
 
-For example, if the HTML element you are attaching the `useDraggable` `listeners` to is already a semantic `button`, although it's harmless to do so, there's no need to add the `role="button"` attribute, since that is already the default role.&#x20;
+比如，如果附加了 `useDraggable` 导出的 `listeners` 的 HTML 元素本身就是一个语义化的 `button`，由于它已经具有默认的 role 属性，就没有必要再为其设置属性 `role="button"`，尽管这也没什么影响。
 
-比如，如果附加了 `useDraggable` 导出的 `listeners` 的 HTML 元素本身就是一个语义化的 `button`，由于它已经具有默认的 role 属性，就没有必要再为其设置属性 `role="button"`，尽管没什么影响。
+| 属性                   | 默认值                    | 描述                                                                                                                                                                                |
+| ---------------------- | ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `role`                 | `"button"`                | <p>如果可以，最好是使用语义化的 <code>&#x3C;button></code> 来表示附加 listeners 的 DOM 元素。 </p><p></p><p>如果不可以，需要包含属性 <code>role="button"</code>，这也是默认值。</p> |
+| `tabIndex`             | `"0"`                     | 如果 draggable 元素不是本地交互元素（如 HTML 的 `button`），则为了使它们能接收到键盘焦点，**需要**将 `tabIndex` 属性设置为 `0`。因此，`useDraggable` 默认设置了 `tabIndex="0"`。    |
+| `aria-roledescription` | `"draggable"`             | 虽然 `draggable` 是一个合理地默认值，但还是建议你将它设置为与当前上下文相匹配的某个值。                                                                                             |
+| `aria-describedby`     | `"DndContext-[uniqueId]"` | 每个 draggable 元素都有一个唯一的 `aria-describedby` ID，该 ID 指向[屏幕阅读器指令](../context-provider/#screen-reader-instructions)，以便在 draggable 元素获得焦点时进行读出。     |
 
-| 属性                   | 默认值                    | 描述                                                                                                                                                                                                                                                                                                |
-| ---------------------- | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `role`                 | `"button"`                | <p>如果可以，最好是使用语义化的 <code>&#x3C;button></code> 来表示附加 listeners 的 DOM 元素。 </p><p></p><p>如果不可以，需要包含属性 <code>role="button"</code>，这也是默认值。</p>                                                                                                                 |
-| `tabIndex`             | `"0"`                     | In order for your draggable elements to receive keyboard focus, they **need** to have the `tabindex` attribute set to `0` if they are not natively interactive elements (such as the HTML `button` element). For this reason, the `useDraggable` hook sets the `tabindex="0"` attribute by default. |
-| `aria-roledescription` | `"draggable"`             | While `draggable` is a sensible default, we recommend you customize this value to something that is tailored to the use case you are building.                                                                                                                                                      |
-| `aria-describedby`     | `"DndContext-[uniqueId]"` | Each draggable item is provided a unique `aria-describedby` ID that points to the [screen reader instructions](../context-provider/#screen-reader-instructions) to be read out when a draggable item receives focus.                                                                                |
-
-To learn more about the best practices for making draggable interfaces accessible, read the full accessibility guide:
-想要了解更多关于使 draggable 界面无障碍性的最佳实践，请阅读无障碍指南
+想要了解更多关于使 draggable 界面无障碍性的最佳实践，请阅读完整的无障碍指南：
 
 {% content-ref url="../../guides/accessibility.md" %}
 [accessibility.md](../../guides/accessibility.md)
@@ -161,29 +152,30 @@ To learn more about the best practices for making draggable interfaces accessibl
 
 强烈推荐为所有的 draggable 元素指定 CSS 属性 `touch-action`。
 
-> The **`touch-action`** CSS property sets how an element's region can be manipulated by a touchscreen user (for example, by zooming features built into the browser).\
+> CSS 属性 **`touch-action`** 设置了触摸屏用户如何在某个元素区域中进行操作（比如，通过浏览器内置的缩放功能进行操作）。\
 > \
 > 来源: [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action)
 
-In general, we recommend you set the `touch-action` property to `none` for draggable elements in order to prevent scrolling on mobile devices.&#x20;
+通常，为了防止 draggable 元素在移动设备上进行滚动，建议将它的 `touch-action` 属性设置为 `none`。
 
 {% hint style="info" %}
-For [Pointer Events,](../sensors/pointer.md) there is no way to prevent the default behaviour of the browser on touch devices when interacting with a draggable element from the pointer event listeners. Using `touch-action: none;` is the only way to reliably prevent scrolling for pointer events.
 
-Further, using `touch-action: none;` is currently the only reliable way to prevent scrolling in iOS Safari for both Touch and Pointer events.&#x20;
+对于[指针事件](../sensors/pointer.md)，当与来自指针事件监听器的 draggable 元素交互时，将无法阻止浏览器在触摸设备上的默认行为。使用 `touch-action: none;` 是在触发指针事件时，可以防止滚动的唯一可靠方法。
+
+此外，使用 `touch-action: none;` 是目前对于在 iOS Safari 中的触摸与指针事件，可以防止滚动的唯一可靠方法。
 {% endhint %}
 
-If your draggable item is part of a scrollable list, we recommend you use a drag handle and set `touch-action` to `none` only for the drag handle, so that the contents of the list can still be scrolled, but that initiating a drag from the drag handle does not scroll the page.
+如果 draggable 元素是一个滚动列表中的一部分，建议使用一个拖动手柄，同时仅为拖动手柄设置属性 `touch-action` 为 `none`，这样，列表中的内容仍然可以滚动，但根据拖动手柄触发拖动后不会在页面中滚动。
 
-Once a `pointerdown` or `touchstart` event has been initiated, any changes to the `touch-action` value will be ignored. Programmatically changing the `touch-action` value for an element from `auto` to `none` after a pointer or touch event has been initiated will not result in the user agent aborting or suppressing any default behavior for that event for as long as that pointer is active (for more details, refer to the [Pointer Events Level 2 Spec](https://www.w3.org/TR/pointerevents2/#determining-supported-touch-behavior)).
+一旦触发了 `pointerdown` 或 `touchstart` 事件，对 `touch-action` 值的任何修改都会被忽略。在触发指针或触摸事件后，只要指针处于 active 状态，通过编程化的方式将 `touch-action` 的值从 `auto` 修改为 `none`，不会导致用户代理终止或压制该事件的任何默认行为。（更多的细节信息，可以参考[Pointer Events Level 2 Spec](https://www.w3.org/TR/pointerevents2/#determining-supported-touch-behavior)）
 
 ## Drag Overlay
 
-The `<DragOverlay>` component provides a way to render a draggable overlay that is removed from the normal document flow and is positioned relative to the viewport.
+`<DragOverlay>` 组件支持为 draggable 元素渲染一个脱离正常文档流饼相对于视口定位的浮层。
 
 ![](<../../.gitbook/assets/dragoverlay (1).png>)
 
-To learn more about how to use drag overlays, read the in-depth guide:
+想要了解更多关于如何使用拖动浮层的信息，请阅读以下指南：
 
 {% content-ref url="drag-overlay.md" %}
 [drag-overlay.md](drag-overlay.md)
