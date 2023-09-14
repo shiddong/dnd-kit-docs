@@ -1,6 +1,6 @@
 ---
 description: >-
-  @dnd-kit – 一个轻量级、模块化、高性能、可访问且可扩展的 React 拖放工具包。
+  @dnd-kit – 一个轻量级、模块化、高性能、易使用且可扩展的 React 拖放工具包。
 ---
 
 # 概述
@@ -42,8 +42,8 @@ description: >-
 
 主要的扩展点包括:
 
-- [传感器 Sensors](api-documentation/sensors/)
-- [修改器 Modifiers](api-documentation/modifiers.md)
+- [传感器 (Sensors)](api-documentation/sensors/)
+- [修改器 (Modifiers)](api-documentation/modifiers.md)
 - [自定义碰撞检测算法](api-documentation/context-provider/collision-detection-algorithms.md#custom-collision-detection-strategies)
 
 ### 无障碍
