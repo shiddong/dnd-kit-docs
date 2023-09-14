@@ -80,7 +80,7 @@ function Droppable(props) {
 
 同样，`useDraggable` hook 对应用程序的结构也没有要求。它只需要将事件监听器和一个 ref 附加在你希望成为**可拖拽的** DOM 元素上。同时，你也需要为所有的**可拖拽**组件提供一个唯一的 id。
 
-当一个**可拖拽的**元素被选中，`transform` 属性会被填充为需要在屏幕上移动该元素的 `translate` 坐标。
+当一个**可拖拽的**元素被拖动后，`transform` 属性会被填充为需要在屏幕上移动该元素的 `translate` 坐标。
 
 `transform` 对象遵循如下形式：`{x: number, y: number, scaleX: number, scaleY: number}`
 
@@ -123,7 +123,7 @@ function Draggable(props) {
 
   {% endhint %}
 
-将 `transform` 对象转换为字符串可能会感觉很繁琐。放心，你可以通过从 `@dnd-kit/utilities` 包中导入 `CSS` 工具来避免手工操作。
+将 `transform` 对象转换为字符串可能感觉很繁琐。放心，你可以通过从 `@dnd-kit/utilities` 包中导入 `CSS` 工具来避免手工操作。
 
 ```jsx
 import { CSS } from "@dnd-kit/utilities";
@@ -136,7 +136,7 @@ const style = {
 
 ### 组装所有的代码片段
 
-当创建了 **Droppable** 和 **Draggable** 组件，就可以回到使用了 [`<DndContext>`](../api-documentation/context-provider/) 组件的地方，可以添加事件监听器以便响应不同的事件。
+当创建了 **Droppable** 和 **Draggable** 组件，就可以回到使用 [`<DndContext>`](../api-documentation/context-provider/) 组件的地方，添加事件监听器以便响应不同的事件。
 
 在这个示例中，假设你想要将 `<Draggable>` 组件从外部移入到 `<Droppable>` 组件中：
 
@@ -230,7 +230,7 @@ export function Draggable(props) {
 
 ### 更复杂一点的示例
 
-上面示例稍微有点简单。在现实世界的例子中，你可能有多个**可放置**容器，而且你可能还想在元素被拖拽到**可放置**容器中后能够将其拖回。
+上面示例稍微有点简单。在现实世界的例子中，你可能有多个**可放置**容器，而且你可能还想在元素被拖入到**可放置**容器后能够将其拖回。
 
 下面是一个稍微复杂的例子，它包含了多个 **Droppable** 容器：
 
