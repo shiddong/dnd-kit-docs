@@ -42,9 +42,9 @@ function App() {
 
 接下来，我们开始创建第一个 **Droppable** 组件。为此，需要使用到 `useDroppable` hook.
 
-useDroppable 对应用程序的结构没有要求。但至少需要传递一个 [ref](https://reactjs.org/docs/refs-and-the-dom.html) 给将要变成 **droppable** 的 DOM 元素，同时还需要为所有的 **droppable** 组件提供一个唯一的 id。
+useDroppable 对应用程序的结构没有要求。但至少需要传递一个 [ref](https://reactjs.org/docs/refs-and-the-dom.html) 给将要变成**可放置的** DOM 元素，同时还需要为所有的**可放置的**组件提供一个唯一的 id。
 
-当一个 **draggable** 元素移动到 **droppable** 元素之上时，`isOver` 属性就会变成 `true`.
+当一个**可拖拽的**元素移动到**可放置的**元素之上时，`isOver` 属性就会变成 `true`.
 
 {% tabs %}
 {% tab title="Droppable.jsx" %}
@@ -78,9 +78,9 @@ function Droppable(props) {
 
 下面，我们看看如何实现第一个 **Draggable** 组件，为此，需要使用到 `useDraggable` hook.
 
-同样，`useDraggable` hook 对应用程序的结构也没有要求。它只需要将监听器和一个 ref 附加在你希望成为 **可拖拽的 (draggable)** DOM 元素上。同时，你也需要为所有的 **可拖拽的 (draggable)** 组件提供一个唯一的 id。
+同样，`useDraggable` hook 对应用程序的结构也没有要求。它只需要将监听器和一个 ref 附加在你希望成为**可拖拽的** DOM 元素上。同时，你也需要为所有的**可拖拽的**组件提供一个唯一的 id。
 
-当一个 **可拖拽的 (draggable)** 元素被选中，`transform` 属性会被填充为需要在屏幕上移动该元素的 `translate` 坐标。
+当一个**可拖拽的**元素被选中，`transform` 属性会被填充为需要在屏幕上移动该元素的 `translate` 坐标。
 
 `transform` 对象遵循如下形式：`{x: number, y: number, scaleX: number, scaleY: number}`
 
@@ -112,7 +112,7 @@ function Draggable(props) {
 {% endtab %}
 {% endtabs %}
 
-正如上例所示，实际上只需要几行代码就可以将现有的组件转化为一个 **可拖拽的 (draggable)** 组件。
+正如上例所示，实际上只需要几行代码就可以将现有的组件转化为一个**可拖拽的**组件。
 
 {% hint style="success" %}
 **建议:**
@@ -142,7 +142,7 @@ const style = {
 
 ![](../.gitbook/assets/example.png)
 
-为此，需要监听 `<DndContext>` 组件的 `onDragEnd` 事件，来查看 **可拖拽的 (draggable)** 元素是否拖到了 **可放置的 (droppable)** 元素的上层：
+为此，需要监听 `<DndContext>` 组件的 `onDragEnd` 事件，来查看**可拖拽的**元素是否拖到了**可放置的**元素的上层：
 
 {% tabs %}
 {% tab title="App.jsx" %}
@@ -230,7 +230,7 @@ export function Draggable(props) {
 
 ### 更复杂一点的示例
 
-上面示例稍微有点简单。在现实世界的例子中，你可能有多个 **可放置的 (droppable)** 的容器，而且你可能还想在元素被拖动到 **可放置的 (droppable)** 容器中后能够将其拖回。
+上面示例稍微有点简单。在现实世界的例子中，你可能有多个**可放置的**的容器，而且你可能还想在元素被拖拽到**可放置的**容器中后能够将其拖回。
 
 下面是一个稍微复杂的例子，它包含了多个 **Droppable** 容器：
 
