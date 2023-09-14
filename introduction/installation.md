@@ -1,4 +1,4 @@
-# 安装
+# 安装指南
 
 开始使用 **@dnd-kit** 前，请先通过 `npm` 或 `yarn` 安装核心库：
 
@@ -27,14 +27,14 @@ npm install react react-dom
   - [可拖拽 (Draggable)](../api-documentation/draggable/)
   - [可放置 (Droppable)](../api-documentation/droppable/)
 - [拖拽浮层 (Drag Overlay)](../api-documentation/draggable/drag-overlay.md)
-- 传感器 Sensors:
+- 传感器 (Sensors):
   - [指针 (Pointer)](../api-documentation/sensors/pointer.md)
   - [鼠标 (Mouse)](../api-documentation/sensors/mouse.md)
   - [触摸 (Touch)](../api-documentation/sensors/touch.md)
   - [键盘 (Keyboard)](../api-documentation/sensors/keyboard.md)
 - [无障碍功能](../guides/accessibility.md)
 
-### 修改器 (Modifiers)
+### 修改器
 
 利用修改器可以动态地修改传感器检测到的移动坐标。它们的使用场景非常广泛，例如：
 
@@ -43,7 +43,7 @@ npm install react react-dom
 - 将移动限制在可拖拽节点的滚动容器边框内
 - 施加阻力或夹紧运动 (clamping the motion)
 
-Modifiers 代码库中包含了许多有用的修改器，可以应用于 [`DndContext`](../api-documentation/context-provider/) 以及 [`DraggableClone`](../api-documentation/draggable/drag-overlay.md)。
+修改器的代码仓库中包含了许多有用的修改器，可以应用于 [`DndContext`](../api-documentation/context-provider/) 以及 [`DraggableClone`](../api-documentation/draggable/drag-overlay.md)。
 
 使用修改器之前，请先通过 `yarn` 或 `npm` 安装依赖包。
 

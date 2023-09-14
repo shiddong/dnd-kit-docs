@@ -4,7 +4,7 @@
 
 ## 介绍
 
-- [安装](introduction/installation.md)
+- [安装指南](introduction/installation.md)
 - [快速开始](introduction/getting-started.md)
 
 ## API 文档
